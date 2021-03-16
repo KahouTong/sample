@@ -9,7 +9,7 @@ public interface CovidService {
 
 	List<CovidCasesArea> getCovid();
 
-	List<CovidCasesArea> addCovid();
+	CovidCasesDesc addCovid(String desc);
 
 	List<CovidCasesDesc> getCovidDesc();
 

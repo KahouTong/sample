@@ -1,8 +1,8 @@
 package com.app.service.covid;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -79,33 +79,45 @@ public class CovidServiceImpl implements CovidService {
 	
 	// TODO: Related to Practical 4 (Add)
 	@Override
-	public CovidCasesDesc addCovid() {
-		log.info("addCovid started");
-		List<CovidCasesAreaEntity> cases = covidCasesRepository.findAll();
-		CovidCasesAreaEntity covidCasesAreaEntity = cases.get(0);
-		CovidCasesAreaEntity covidCasesAreaEntityNew = new CovidCasesAreaEntity();
+	public CovidCasesDesc addCovid(String desc) {
+	log.info("addCovid started");
+	CovidCasesDesc covidCasesDesc = null;
+	CovidCasesDescEntity covidAreaDescEntity = new CovidCasesDescEntity();
 
-		covidCasesAreaEntityNew.setArea(covidCasesAreaEntity.getArea());
-		covidCasesAreaEntityNew.setDate(new Date());
+	 covidAreaDescEntity.setDescription(desc);
 
-		CovidCasesDescEntity covidAreaDescEntity = new CovidCasesDescEntity();
+	 CovidCasesDescEntity savedEntity = covidCasesDescRepository.save(covidAreaDescEntity);
 
-		covidAreaDescEntity.setDescription(desc);
+	 CovidAreaDescMapper mapper = Selma.builder(CovidAreaDescMapper.class).build();
 
-		CovidCasesDescEntity savedEntity = covidCasesDescRepository.save(covidAreaDescEntity);
+	 covidCasesDesc = mapper.asResource(savedEntity);
+	return covidCasesDesc;
 
-		CovidAreaDescMapper mapper = Selma.builder(CovidAreaDescMapper.class).build();
-
-		covidCasesDesc = mapper.asResource(savedEntity);
-		return null;
-
-	}
+	 }
 
 	// TODO: Related to Practical 4 (Delete)
-	public List<CovidCasesArea> deleteCovid() {
+	public int deleteCovid(long id) throws Exception {
 		log.info("deleteCovid started");
+	
+		try {
 
-		return null;
+			Optional<CovidCasesDescEntity> entityOptional = covidCasesDescRepository.findById(id);
 
+			log.info("Entity found == " + entityOptional.isPresent());
+
+			if (entityOptional.isPresent()) {
+				CovidCasesDescEntity covidAreaDescEntity = entityOptional.get();
+				covidCasesDescRepository.delete(covidAreaDescEntity);
+				return 1;
+			}
+
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			log.error("deleteCovid() exception " + e.getMessage());
+			throw new Exception(e.getMessage());
+		}
+
+		return 0;
 	}
 }
