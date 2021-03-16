@@ -1,6 +1,7 @@
 package com.app.service.covid;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -78,9 +79,24 @@ public class CovidServiceImpl implements CovidService {
 	
 	// TODO: Related to Practical 4 (Add)
 	@Override
-	public List<CovidCasesArea> addCovid() {
+	public CovidCasesDesc addCovid() {
 		log.info("addCovid started");
+		List<CovidCasesAreaEntity> cases = covidCasesRepository.findAll();
+		CovidCasesAreaEntity covidCasesAreaEntity = cases.get(0);
+		CovidCasesAreaEntity covidCasesAreaEntityNew = new CovidCasesAreaEntity();
 
+		covidCasesAreaEntityNew.setArea(covidCasesAreaEntity.getArea());
+		covidCasesAreaEntityNew.setDate(new Date());
+
+		CovidCasesDescEntity covidAreaDescEntity = new CovidCasesDescEntity();
+
+		covidAreaDescEntity.setDescription(desc);
+
+		CovidCasesDescEntity savedEntity = covidCasesDescRepository.save(covidAreaDescEntity);
+
+		CovidAreaDescMapper mapper = Selma.builder(CovidAreaDescMapper.class).build();
+
+		covidCasesDesc = mapper.asResource(savedEntity);
 		return null;
 
 	}
