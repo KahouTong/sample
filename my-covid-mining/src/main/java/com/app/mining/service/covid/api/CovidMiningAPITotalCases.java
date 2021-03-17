@@ -4,4 +4,5 @@ public interface CovidMiningAPITotalCases {
 
 	String doMining() throws Exception;
 
+	String getTotalfromDB() throws Exception;
 }
