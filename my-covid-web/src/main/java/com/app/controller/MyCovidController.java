@@ -27,9 +27,17 @@ public class MyCovidController {
 	List<CovidCasesArea> getLast5Records() throws Exception {
 		log.info("getLast5Records() started");
 
+		List<CovidCasesArea> cList = covidMiningAPITotalCases.getLast5RecordsMY();
+		
+		for (CovidCasesArea c : cList) {
+			log.info("c at Controller Date-->" + c.getDate() + " Cases-->" + c.getCases());
+			
+			
+		}
 		log.info(
 				"getLast5Records() ends. It supposes to return last 5 records from listLast5Records(). (CovidCasesRepository)");
-		return covidMiningAPITotalCases.getLast5RecordsMY();
+		
+		return cList ;
 	}
 	
 	@GetMapping(GET_MY_LAST_5_COVID_PARAM)

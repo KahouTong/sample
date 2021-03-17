@@ -142,22 +142,6 @@ public class CovidController {
 			if (desc == null || desc.equals("undefined") || desc.equals(""))  {
 				throw new NullPointerException(ADD_COVID + ", desc is null or empty");
 			}
-//			List<CovidCasesAreaEntity> cases = covidCasesRepository.findAll();
-//			CovidCasesAreaEntity covidCasesAreaEntity = cases.get(0);
-//			CovidCasesAreaEntity covidCasesAreaEntityNew = new CovidCasesAreaEntity();
-//
-//			covidCasesAreaEntityNew.setArea(covidCasesAreaEntity.getArea());
-//			covidCasesAreaEntityNew.setDate(new Date());
-//
-//			CovidCasesDescEntity covidAreaDescEntity = new CovidCasesDescEntity();
-//
-//			covidAreaDescEntity.setDescription(desc);
-//
-//			CovidCasesDescEntity savedEntity = covidCasesDescRepository.save(covidAreaDescEntity);
-//
-//			CovidAreaDescMapper mapper = Selma.builder(CovidAreaDescMapper.class).build();
-//
-//			covidCasesDesc = mapper.asResource(savedEntity);
 			covidCasesDesc = covidService.addCovid(desc);
 			
 		} catch (Exception e) {

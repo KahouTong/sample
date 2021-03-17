@@ -3,6 +3,8 @@ package com.app.service.covid.api;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.app.entity.CovidCasesAreaEntity;
 import com.app.mapper.CovidCasesAreaMapper;
@@ -36,19 +38,28 @@ public class CovidMiningApiTotalCasesImpl implements CovidMiningAPITotalCases {
 		// TODO Auto-generated method stub
 
 		// TODO: Practical bonus:
-		// Pageable top5 = PageRequest.of(0, 2);
-		// List<CovidCasesAreaEntity> list =
-		// covidCasesRepository.listLast5RecordsHQL(top5);
+		 Pageable top5 = PageRequest.of(0, 2);
+		 List<CovidCasesAreaEntity> list =
+		 covidCasesRepository.listLast5RecordsHQL(top5);
 
-		List<CovidCasesAreaEntity> casesEntities = covidCasesRepository.listLast5Records();
+//		List<CovidCasesAreaEntity> casesEntities = covidCasesRepository.listLast5RecordsHQL();
 
 		CovidCasesAreaMapper mapper = Selma.builder(CovidCasesAreaMapper.class).build();
 
 		List<CovidCasesArea> casesPojos = new ArrayList<CovidCasesArea>();
-		for (CovidCasesAreaEntity covidCasesAreaEntity : casesEntities) {
+		for (CovidCasesAreaEntity covidCasesAreaEntity : list) {
+		//	log.info("covidCasesAreaEntity Date-->" + covidCasesAreaEntity.getDate() + " Cases-->" + covidCasesAreaEntity.getCases());
+			
 			CovidCasesArea covidCasesArea = mapper.asResource(covidCasesAreaEntity);
 			casesPojos.add(covidCasesArea);
 		}
+		
+		for (CovidCasesArea c : casesPojos) {
+			log.info("c Date-->" + c.getDate() + " Cases-->" + c.getCases());
+			
+			
+		}
+
 
 		log.info("getLast5RecordsMY ends.");
 
@@ -60,9 +71,9 @@ public class CovidMiningApiTotalCasesImpl implements CovidMiningAPITotalCases {
 		// TODO Auto-generated method stub
 
 		// TODO: Practical bonus:
-		// Pageable top5 = PageRequest.of(0, size);
-		// List<CovidCasesAreaEntity> list =
-		// covidCasesRepository.listLast5RecordsHQL(top5);
+//		 Pageable top5 = PageRequest.of(0, size);
+//		 List<CovidCasesAreaEntity> list =
+//		 covidCasesRepository.listLast5RecordsHQL(top5);
 
 		// complete the code here as getLast5RecordsMY method
 		List<CovidCasesArea> casesPojos = new ArrayList<CovidCasesArea>();
@@ -78,7 +89,7 @@ public class CovidMiningApiTotalCasesImpl implements CovidMiningAPITotalCases {
 	@Override
 	public String getTotalfromDB() throws Exception {
 		log.info("getTotalfromDB starts. ");
-		List<CovidCasesAreaEntity> casesEntities = covidCasesRepository.listLast2Records();
+		List<CovidCasesAreaEntity> casesEntities = covidCasesRepository.listLast2RecordsHQL();
 		log.info("getTotalfromDB casesEntities size ={} ", casesEntities.size());
 
 		int totalCases = 0;
