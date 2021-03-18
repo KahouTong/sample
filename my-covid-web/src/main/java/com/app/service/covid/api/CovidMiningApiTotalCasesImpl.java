@@ -2,6 +2,9 @@ package com.app.service.covid.api;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +18,7 @@ import fr.xebia.extras.selma.Selma;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Transactional
 @Slf4j
 public class CovidMiningApiTotalCasesImpl implements CovidMiningAPITotalCases {
 
@@ -71,19 +75,25 @@ public class CovidMiningApiTotalCasesImpl implements CovidMiningAPITotalCases {
 		// TODO Auto-generated method stub
 
 		// TODO: Practical bonus:
-//		 Pageable top5 = PageRequest.of(0, size);
-//		 List<CovidCasesAreaEntity> list =
-//		 covidCasesRepository.listLast5RecordsHQL(top5);
-
+		 Pageable top5 = PageRequest.of(0, size);
+		 List<CovidCasesAreaEntity> list =
+		 covidCasesRepository.listLast5RecordswithsizeHQL(top5);
+		 CovidCasesAreaMapper mapper = Selma.builder(CovidCasesAreaMapper.class).build();
 		// complete the code here as getLast5RecordsMY method
 		List<CovidCasesArea> casesPojos = new ArrayList<CovidCasesArea>();
-
+		
+		for (CovidCasesAreaEntity covidCasesAreaEntity : list) {
+			//	log.info("covidCasesAreaEntity Date-->" + covidCasesAreaEntity.getDate() + " Cases-->" + covidCasesAreaEntity.getCases());
+				
+				CovidCasesArea covidCasesArea = mapper.asResource(covidCasesAreaEntity);
+				casesPojos.add(covidCasesArea);
+			}
 		if (casesPojos.size() == 0) {
 			throw new Exception("query return nothing!");
 		}
 		
 		log.info("getLast5RecordsMYWithSize ends.");
-		return null;
+		return casesPojos;
 	}
 
 	@Override

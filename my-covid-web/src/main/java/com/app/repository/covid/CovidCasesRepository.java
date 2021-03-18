@@ -26,6 +26,8 @@ public interface CovidCasesRepository extends JpaRepository<CovidCasesAreaEntity
 	
 	@Query("SELECT c FROM CovidCasesAreaEntity AS c order by date desc")
 	List<CovidCasesAreaEntity> listLast5RecordsHQL(Pageable pageable);
+	@Query("SELECT c FROM CovidCasesAreaEntity AS c order by date desc")
+	List<CovidCasesAreaEntity> listLast5RecordswithsizeHQL(Pageable pageable);
 	
 	@Query("SELECT c FROM CovidCasesAreaEntity AS c order by date desc")
 	List<CovidCasesAreaEntity> listLast2RecordsHQL();
