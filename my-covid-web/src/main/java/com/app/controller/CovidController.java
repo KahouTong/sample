@@ -191,7 +191,7 @@ public class CovidController {
 		CovidCasesDescEntity covidCasesDescEntity = mapper.asEntity(covidCasesDesc);
 		CovidCasesDescEntity savedEntity = covidCasesDescRepository.save(covidCasesDescEntity);
 		covidCasesDesc = mapper.asResource(savedEntity);
-		log.info("putCovid() ends, covidCasesDescSaved={}", covidCasesDesc);
+		log.info("postCovid() ends, covidCasesDescSaved={}", covidCasesDesc);
 		
 		// return should be the Saved CovidCasesDesc with values
 		return covidCasesDesc;
