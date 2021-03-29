@@ -1,6 +1,7 @@
 package com.app.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,16 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.entity.CovidCasesDescEntity;
-import com.app.mapper.CovidAreaDescMapper;
 import com.app.model.CovidCasesArea;
 import com.app.model.CovidCasesDesc;
-import com.app.repository.covid.CovidCasesDescRepository;
 import com.app.service.covid.CovidService;
-import com.app.service.covid.CovidServiceImpl;
 import com.app.service.covid.api.CovidMiningAPITotalCases;
 
-import fr.xebia.extras.selma.Selma;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -43,15 +39,14 @@ public class CovidController {
 	private final static String PUT_API = "/covid/put";
 	
 	private final static String POST_COVID = "/covid/post";
+	
+	private final static String DELETE_COVID_SOAPUI = "/covid/delete/soap";
 
 	@Autowired
 	private CovidService covidService;
 
-	@Autowired
-	private CovidServiceImpl covidServiceImpl;
-
-	@Autowired
-	private CovidCasesDescRepository covidCasesDescRepository;
+//	@Autowired
+//	private CovidServiceImpl covidServiceImpl;
 
 	@Autowired
 	CovidMiningAPITotalCases covidMiningAPITotalCases;
@@ -162,38 +157,33 @@ public class CovidController {
 	int deleteCovid(@RequestParam(required = true) long id) throws Exception {
 		log.info("deleteCovid() started id={}", id);
 
-		return covidServiceImpl.deleteCovid(id);
+		return covidService.deleteCovid(id);
 	}
 	
 	// TODO: Angular Practical 7 - Full Stack Application for Covid Put HTTP
 	@PutMapping(PUT_API)
-	CovidCasesDesc putCovid(@RequestBody CovidCasesDesc covidCasesDesc) throws RuntimeException {
-		log.info("putCovid() started, covidCasesDesc={}", covidCasesDesc);
-
+	CovidCasesDesc putCovid(@RequestBody CovidCasesDesc covidCasesDesc) throws Exception {
+		
 		// complete the implementation below
-		CovidAreaDescMapper mapper = Selma.builder(CovidAreaDescMapper.class).build();
-		CovidCasesDescEntity covidCasesDescEntity = mapper.asEntity(covidCasesDesc);
-		CovidCasesDescEntity savedEntity = covidCasesDescRepository.save(covidCasesDescEntity);
-		covidCasesDesc = mapper.asResource(savedEntity);
-		log.info("putCovid() ends, covidCasesDescSaved={}", covidCasesDesc);
+
 		
 		// return should be the Saved CovidCasesDesc with values
-		return covidCasesDesc;
+		return covidService.putCovid(covidCasesDesc);
 	}
 	
 	
 	@PostMapping(POST_COVID)
-	CovidCasesDesc postCovid(@RequestBody CovidCasesDesc covidCasesDesc) throws RuntimeException {
-		log.info("postCovid() started, covidCasesDesc={}", covidCasesDesc);
+	CovidCasesDesc postCovid(@RequestBody CovidCasesDesc covidCasesDesc) throws Exception {
 
-		// complete the implementation below
-		CovidAreaDescMapper mapper = Selma.builder(CovidAreaDescMapper.class).build();
-		CovidCasesDescEntity covidCasesDescEntity = mapper.asEntity(covidCasesDesc);
-		CovidCasesDescEntity savedEntity = covidCasesDescRepository.save(covidCasesDescEntity);
-		covidCasesDesc = mapper.asResource(savedEntity);
-		log.info("postCovid() ends, covidCasesDescSaved={}", covidCasesDesc);
-		
-		// return should be the Saved CovidCasesDesc with values
-		return covidCasesDesc;
+	// return should be the Saved CovidCasesDesc with values
+		return covidService.postCovid(covidCasesDesc);
+	}
+	
+	// TODO: Performance Practical 2 - Performance and Functional Testing
+	@DeleteMapping(DELETE_COVID_SOAPUI)
+
+	int deleteCovidSoap(@RequestParam(required = true) String desc) throws Exception {
+
+		return covidService.deleteCovidSoap(desc);
 	}
 }
