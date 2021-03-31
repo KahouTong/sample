@@ -1,6 +1,12 @@
 package com.app.repository.covid;
 
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import com.app.entity.CovidCasesBonusEntity;
 
@@ -9,5 +15,11 @@ import com.app.entity.CovidCasesBonusEntity;
 
 // hint: interface is similar to CovidCasesDescRepository
 public interface CovidCasesBonusRepository extends JpaRepository<CovidCasesBonusEntity, Long>{
-
+	@Transactional
+	@Modifying
+	@Query("DELETE  FROM CovidCasesBonusEntity d WHERE d.description = :bonus")
+	int deleteDescWithCondition(String bonus);
+	
+	@Query("SELECT description FROM CovidCasesBonusEntity d GROUP BY description HAVING COUNT(*)>1 ")
+	List<String> findDuplicate(); 
 }
