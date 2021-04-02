@@ -11,12 +11,10 @@ import com.app.entity.CovidCasesAreaEntity;
 
 public interface CovidCasesRepository extends JpaRepository<CovidCasesAreaEntity, UUID>  {
 	
-	// TODO: Practical bonus
+	// Practical bonus
 	// Change the Query above to Spring JPA Query or JPQL
 	// Simple SQL Should not use native query as change of db the query syntax need to be changed. 
 	// If use Spring JPQL, the SQL below can be maintained even change of DB
-	
-	//List<CovidCasesAreaEntity> listLast5RecordsHQL(Pageable pageable);
 	
 	@Query("SELECT c FROM CovidCasesAreaEntity AS c order by date desc")
 	List<CovidCasesAreaEntity> listLast5RecordsHQL(Pageable pageable);

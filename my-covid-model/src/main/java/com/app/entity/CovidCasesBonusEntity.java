@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-//TODO: Practical bonus final
+//Practical bonus final
 
 //Hint Entity is similar to CovidCasesDescEntity
 //complete this as new CovidCasesBonusEntity

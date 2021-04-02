@@ -19,8 +19,6 @@ public interface CovidService {
 
 	CovidCasesDesc postCovid(CovidCasesDesc covidCasesDesc) throws Exception;
 
-//	List<CovidCasesDesc> deleteCovidDesc(String desc) throws Exception;
-
 	int deleteCovidSoap(String desc);
 
 

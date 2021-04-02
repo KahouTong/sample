@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Transactional
 @Slf4j
-public class CovidMiningApiTotalCasesImpl implements CovidMiningAPITotalCases {
+public class CovidApiTotalCasesImpl implements CovidAPITotalCases {
 
 	@Autowired
 	CovidCasesRepository covidCasesRepository;
@@ -31,28 +31,24 @@ public class CovidMiningApiTotalCasesImpl implements CovidMiningAPITotalCases {
 
 		log.info("first cases ={}, last cases= {} ", first.getCases(), last.getCases());
 
-		int totalCases = last.getCases() - first.getCases();
+		return (last.getCases() - first.getCases());
 
-		return totalCases;
-
+		
 	}
 
 	@Override
 	public List<CovidCasesArea> getLast5RecordsMY() throws Exception {
-		// TODO Auto-generated method stub
+		//   Auto-generated method stub
 
-		// TODO: Practical bonus:
+		//   Practical bonus:
 		 Pageable top5 = PageRequest.of(0, 2);
 		 List<CovidCasesAreaEntity> list =
 		 covidCasesRepository.listLast5RecordsHQL(top5);
 
-//		List<CovidCasesAreaEntity> casesEntities = covidCasesRepository.listLast5RecordsHQL();
-
 		CovidCasesAreaMapper mapper = Selma.builder(CovidCasesAreaMapper.class).build();
 
-		List<CovidCasesArea> casesPojos = new ArrayList<CovidCasesArea>();
+		List<CovidCasesArea> casesPojos = new ArrayList<>();
 		for (CovidCasesAreaEntity covidCasesAreaEntity : list) {
-		//	log.info("covidCasesAreaEntity Date-->" + covidCasesAreaEntity.getDate() + " Cases-->" + covidCasesAreaEntity.getCases());
 			
 			CovidCasesArea covidCasesArea = mapper.asResource(covidCasesAreaEntity);
 			casesPojos.add(covidCasesArea);
@@ -72,23 +68,22 @@ public class CovidMiningApiTotalCasesImpl implements CovidMiningAPITotalCases {
 
 	@Override
 	public List<CovidCasesArea> getLast5RecordsMYWithSize(int size) throws Exception {
-		// TODO Auto-generated method stub
+		//   Auto-generated method stub
 
-		// TODO: Practical bonus:
+		//   Practical bonus:
 		 Pageable top5 = PageRequest.of(0, size);
 		 List<CovidCasesAreaEntity> list =
 		 covidCasesRepository.listLast5RecordswithsizeHQL(top5);
 		 CovidCasesAreaMapper mapper = Selma.builder(CovidCasesAreaMapper.class).build();
 		// complete the code here as getLast5RecordsMY method
-		List<CovidCasesArea> casesPojos = new ArrayList<CovidCasesArea>();
+		List<CovidCasesArea> casesPojos = new ArrayList<>();
 		
 		for (CovidCasesAreaEntity covidCasesAreaEntity : list) {
-			//	log.info("covidCasesAreaEntity Date-->" + covidCasesAreaEntity.getDate() + " Cases-->" + covidCasesAreaEntity.getCases());
 				
 				CovidCasesArea covidCasesArea = mapper.asResource(covidCasesAreaEntity);
 				casesPojos.add(covidCasesArea);
 			}
-		if (casesPojos.size() == 0) {
+		if (casesPojos.isEmpty()) {
 			throw new Exception("query return nothing!");
 		}
 		
@@ -105,7 +100,7 @@ public class CovidMiningApiTotalCasesImpl implements CovidMiningAPITotalCases {
 		int totalCases = 0;
 		String date = "";
 		if (!casesEntities.isEmpty()) {
-			List<Covid19ApiModel> covidApiModels = new ArrayList<Covid19ApiModel>();
+			List<Covid19ApiModel> covidApiModels = new ArrayList<>();
 
 			CovidCasesAreaEntity covidCasesAreaEntity = casesEntities.get(1);
 			log.info("getTotalfromDB Last covidCasesAreaEntity date={}, cases={}", covidCasesAreaEntity.getDate(),
