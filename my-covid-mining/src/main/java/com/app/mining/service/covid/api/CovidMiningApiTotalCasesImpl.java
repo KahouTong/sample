@@ -83,13 +83,13 @@ public class CovidMiningApiTotalCasesImpl implements CovidMiningAPITotalCases {
 	private void updateDB(List<Covid19ApiModel> covid19ApiModels) throws ParseException {
 
 		List<CovidCasesAreaEntity> covidCasesAreaEntities = covidCasesRepository.listLast5Records();
-		Boolean f = false;
+		
 		for (Covid19ApiModel covid19ApiModel : covid19ApiModels) {
 			covid19ApiModel.getDate();
 
 			CovidCasesAreaEntity covidCasesAreaEntity = new CovidCasesAreaEntity();
 			covidCasesAreaEntity.setCases(covid19ApiModel.getCases());
-			f = isDuplicate(covidCasesAreaEntities, covid19ApiModel);
+			Boolean f = isDuplicate(covidCasesAreaEntities, covid19ApiModel);
 			if (Boolean.TRUE.equals(f)) {
 				log.info("updateDB this record. covid19ApiModel date={}" + covid19ApiModel.getDate());
 				Date date = DateTools.convertDate(covid19ApiModel.getDate(), API_DATE_FORMAT);
