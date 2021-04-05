@@ -13,11 +13,11 @@ public interface CovidService {
 
 	List<CovidCasesDesc> getCovidDesc();
 
-	int deleteCovid(long id) throws Exception;
+	int deleteCovid(long id);
 
-	CovidCasesDesc putCovid(CovidCasesDesc covidCasesDesc) throws Exception;
+	CovidCasesDesc putCovid(CovidCasesDesc covidCasesDesc);
 
-	CovidCasesDesc postCovid(CovidCasesDesc covidCasesDesc) throws Exception;
+	CovidCasesDesc postCovid(CovidCasesDesc covidCasesDesc);
 
 	int deleteCovidSoap(String desc);
 

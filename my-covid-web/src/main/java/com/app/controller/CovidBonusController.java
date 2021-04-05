@@ -61,13 +61,13 @@ public class CovidBonusController {
 	
 	
 	@GetMapping(GET_MY_BONUS)
-	public List<CovidCasesBonus> bonus() throws Exception {
+	public List<CovidCasesBonus> bonus() throws ControllerException {
 		log.info("bonus() started");
 		List<CovidCasesBonus> covidCasesBonus = null;
 		try {
 			covidCasesBonus = covidBonusService.getCovidBonus();
 			if (covidCasesBonus == null) {
-				throw new Exception("No bonus yet");
+				throw new NullPointerException(GET_MY_BONUS + ", bonus is null or empty");
 			}
 		} catch (Exception e) {
 			log.error("bonus() exception " + e.getMessage());
@@ -79,7 +79,7 @@ public class CovidBonusController {
 	}
 	
 	@GetMapping(ADD_COVID)
-	public CovidCasesBonus addCovidBonus(@RequestParam(required = true) String bonus) throws Exception {
+	public CovidCasesBonus addCovidBonus(@RequestParam(required = true) String bonus) throws ControllerException {
 		log.info("addCovidBonus() started={}", bonus);
 
 		CovidCasesBonus covidCasesBonus = null;
@@ -99,7 +99,7 @@ public class CovidBonusController {
 	}
 	
 	@DeleteMapping(DELETE_COVID)
-	public int deleteCovidBonus(@RequestParam(required = true) long id) throws Exception {
+	public int deleteCovidBonus(@RequestParam(required = true) long id) throws ControllerException {
 		log.info("deleteCovidBonus() started id={}", id);
 		int i = 0;
 		try {
@@ -114,7 +114,7 @@ public class CovidBonusController {
 	}
 	
 	@PutMapping(PUT_API)
-	public CovidCasesBonus putCovidBonus(@RequestBody CovidCasesBonus covidCasesBonus) throws Exception {
+	public CovidCasesBonus putCovidBonus(@RequestBody CovidCasesBonus covidCasesBonus) throws ControllerException {
 		
 		// complete the implementation below
 
@@ -136,7 +136,7 @@ public class CovidBonusController {
 	
 	
 	@PostMapping(POST_COVID)
-	public CovidCasesBonus postCovidBonus(@RequestBody CovidCasesBonus covidCasesBonus) throws Exception {
+	public CovidCasesBonus postCovidBonus(@RequestBody CovidCasesBonus covidCasesBonus) throws ControllerException {
 		try {
 
 			if (covidCasesBonus == null) {
@@ -155,14 +155,14 @@ public class CovidBonusController {
 	
 	
 	@DeleteMapping(DELETE_COVID_SOAPUI)
-	public int deleteCovidSoapBonus(@RequestParam(required = true) String bonus){
+	public int deleteCovidSoapBonus(@RequestParam(required = true) String bonus) throws ControllerException {
 		int i = 0;
 		try {
 		i = covidBonusService.deleteCovidSoap(bonus);
 		}
 		 catch (Exception e) {
 				//   Auto-generated catch block
-				log.error("deleteCovid() exception " + e.getMessage());
+				log.error("deleteCovidSoap() exception " + e.getMessage());
 				throw new ControllerException(DELETE_COVID_SOAPUI, e.getMessage());
 			}
 		return i;
@@ -170,7 +170,7 @@ public class CovidBonusController {
 	
 	
 	@DeleteMapping(DELETE_DUPLICATE_COVID)
-	public List<String> findDuplicateNdelete() throws Exception {
+	public List<String> findDuplicateNdelete() throws ControllerException {
 		log.info("findDuplicateNdelete() started");		
 		
 		// complete the implementation below
@@ -187,7 +187,7 @@ public class CovidBonusController {
 		}	
 		 catch (Exception e) {
 				//   Auto-generated catch block
-				log.error("deleteCovid() exception " + e.getMessage());
+				log.error("deleteCovidDuplicate() exception " + e.getMessage());
 				throw new ControllerException(DELETE_DUPLICATE_COVID, e.getMessage());
 			}
 		log.info("findDuplicateNdelete() ended");

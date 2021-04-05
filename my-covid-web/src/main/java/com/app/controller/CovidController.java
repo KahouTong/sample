@@ -50,7 +50,7 @@ public class CovidController {
 	CovidAPITotalCases covidMiningAPITotalCases;
 
 	@GetMapping(GET_LATEST_COVID_FROM_DB)
-	public String getLatest() throws Exception {
+	public String getLatest() throws ControllerException {
 		log.info("getLatest() started");
 		String returnString = null;
 
@@ -67,7 +67,7 @@ public class CovidController {
 	}
 
 	@GetMapping(GET_COVID_DESC)
-	public List<CovidCasesDesc> findAllDesc() throws Exception {
+	public List<CovidCasesDesc> findAllDesc() throws ControllerException {
 		log.info("findAll() started");
 		List<CovidCasesDesc> covidCasesdescs = null;
 		try {
@@ -83,7 +83,7 @@ public class CovidController {
 	}
 
 	@GetMapping(GET_COVID)
-	public List<CovidCasesArea> findAll() throws Exception {
+	public List<CovidCasesArea> findAll() throws ControllerException {
 		log.info("findAll() started");
 		List<CovidCasesArea> covidCasesAreas = null;
 		try {
@@ -103,7 +103,7 @@ public class CovidController {
 	// browser
 
 	@GetMapping(GET_HELLO_API)
-	public String getHello() throws Exception {
+	public String getHello() throws ControllerException {
 		log.info("getHello() started");
 		String hello = null;
 		try {
@@ -122,7 +122,7 @@ public class CovidController {
 	// Example, http://localhost:8081/covid/hello?aNumberOnly=string
 
 	@GetMapping(GET_LOG_API)
-	public String getLogging(@RequestParam String aNumberOnly) throws Exception {
+	public String getLogging(@RequestParam String aNumberOnly) throws ControllerException {
 		log.info("getLogging() started, requestParamvalue={}", aNumberOnly);
 		int num = 0;
 		if (aNumberOnly != null) {
@@ -135,7 +135,7 @@ public class CovidController {
 	// Move the logic below under try/catch area to CovidServiceImpl
 	// check out the remarks of " Practical 4 " on CovidServiceImpl
 	@GetMapping(ADD_COVID)
-	public CovidCasesDesc addCovid(@RequestParam(required = true) String desc) throws Exception {
+	public CovidCasesDesc addCovid(@RequestParam(required = true) String desc) throws ControllerException {
 		log.info("addCovid() started={}", desc);
 
 		CovidCasesDesc covidCasesDesc = null;
@@ -158,7 +158,7 @@ public class CovidController {
 	// Move the logic below under try/catch area to CovidServiceImpl
 	// check out the remarks of " Practical 4 " on CovidServiceImpl
 	@DeleteMapping(DELETE_COVID)
-	public int deleteCovid(@RequestParam(required = true) long id) throws Exception {
+	public int deleteCovid(@RequestParam(required = true) long id) throws ControllerException {
 		log.info("deleteCovid started");
 		int i = 0;
 		try {
@@ -174,7 +174,7 @@ public class CovidController {
 
 	//  Angular Practical 7 - Full Stack Application for Covid Put HTTP
 	@PutMapping(PUT_API)
-	public CovidCasesDesc putCovid(@RequestBody CovidCasesDesc covidCasesDesc) throws Exception {
+	public CovidCasesDesc putCovid(@RequestBody CovidCasesDesc covidCasesDesc) throws ControllerException {
 
 		// complete the implementation below
 
@@ -195,7 +195,7 @@ public class CovidController {
 	}
 
 	@PostMapping(POST_COVID)
-	public CovidCasesDesc postCovid(@RequestBody CovidCasesDesc covidCasesDesc) throws Exception {
+	public CovidCasesDesc postCovid(@RequestBody CovidCasesDesc covidCasesDesc) throws ControllerException {
 
 		// return should be the Saved CovidCasesDesc with values
 		try {
@@ -214,7 +214,7 @@ public class CovidController {
 
 	//  Performance Practical 2 - Performance and Functional Testing
 	@DeleteMapping(DELETE_COVID_SOAPUI)
-	public int deleteCovidSoap(@RequestParam(required = true) String desc)throws Exception {
+	public int deleteCovidSoap(@RequestParam(required = true) String desc)throws ControllerException {
 
 		log.info("deleteCovid started");
 		int i = 0;

@@ -10,11 +10,11 @@ public interface CovidBonusService {
 	
 	CovidCasesBonus addCovid(String bonus);
 	
-	int deleteCovid(long id) throws Exception;
+	int deleteCovid(long id);
 
-	CovidCasesBonus putCovid(CovidCasesBonus covidCasesBonus) throws Exception;
+	CovidCasesBonus putCovid(CovidCasesBonus covidCasesBonus);
 
-	CovidCasesBonus postCovid(CovidCasesBonus covidCasesBonus) throws Exception;
+	CovidCasesBonus postCovid(CovidCasesBonus covidCasesBonus);
 	
 	int deleteCovidSoap(String desc);
 

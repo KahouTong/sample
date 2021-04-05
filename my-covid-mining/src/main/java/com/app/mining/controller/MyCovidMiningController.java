@@ -18,7 +18,7 @@ public class MyCovidMiningController {
 	CovidMiningAPITotalCases covidMiningAPITotalCases;
 
 	@GetMapping(MINING_MY_COVID)
-	public String mining() throws Exception {
+	public String mining() throws ControllerException {
 		log.info("mining() started");
 		String strReturn = null;
 

@@ -101,7 +101,7 @@ public class CovidServiceImpl implements CovidService {
 
 			Optional<CovidCasesDescEntity> entityOptional = covidCasesDescRepository.findById(id);
 
-			log.info("Entity found == " + entityOptional.isPresent());
+			log.info("Entity found == {}" , entityOptional.isPresent());
 
 			if (entityOptional.isPresent()) {
 				CovidCasesDescEntity covidAreaDescEntity = entityOptional.get();

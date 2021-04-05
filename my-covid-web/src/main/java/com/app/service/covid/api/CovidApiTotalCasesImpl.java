@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.app.entity.CovidCasesAreaEntity;
+import com.app.error.GeneralException;
 import com.app.mapper.CovidCasesAreaMapper;
 import com.app.model.CovidCasesArea;
 import com.app.model.api.Covid19ApiModel;
@@ -37,7 +38,7 @@ public class CovidApiTotalCasesImpl implements CovidAPITotalCases {
 	}
 
 	@Override
-	public List<CovidCasesArea> getLast5RecordsMY() throws Exception {
+	public List<CovidCasesArea> getLast5RecordsMY(){
 		//   Auto-generated method stub
 
 		//   Practical bonus:
@@ -67,7 +68,7 @@ public class CovidApiTotalCasesImpl implements CovidAPITotalCases {
 	}
 
 	@Override
-	public List<CovidCasesArea> getLast5RecordsMYWithSize(int size) throws Exception {
+	public List<CovidCasesArea> getLast5RecordsMYWithSize(int size){
 		//   Auto-generated method stub
 
 		//   Practical bonus:
@@ -84,7 +85,7 @@ public class CovidApiTotalCasesImpl implements CovidAPITotalCases {
 				casesPojos.add(covidCasesArea);
 			}
 		if (casesPojos.isEmpty()) {
-			throw new Exception("query return nothing!");
+			throw new GeneralException("query return nothing!");
 		}
 		
 		log.info("getLast5RecordsMYWithSize ends.");
@@ -92,7 +93,7 @@ public class CovidApiTotalCasesImpl implements CovidAPITotalCases {
 	}
 
 	@Override
-	public String getTotalfromDB() throws Exception {
+	public String getTotalfromDB(){
 		log.info("getTotalfromDB starts. ");
 		List<CovidCasesAreaEntity> casesEntities = covidCasesRepository.listLast2RecordsHQL();
 		log.info("getTotalfromDB casesEntities size ={} ", casesEntities.size());
