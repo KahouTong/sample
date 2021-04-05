@@ -125,9 +125,15 @@ public class CovidController {
 	public String getLogging(@RequestParam String aNumberOnly) throws ControllerException {
 		log.info("getLogging() started, requestParamvalue={}", aNumberOnly);
 		int num = 0;
+		try {
 		if (aNumberOnly != null) {
 			num = Integer.parseInt(aNumberOnly);
 		}
+	} catch (Exception e) {
+		//   Auto-generated catch block
+		log.error("add() exception " + e.getMessage());
+		throw new ControllerException(GET_LOG_API, e.getMessage());
+	}
 		return "you have input =>" + num;
 	}
 
