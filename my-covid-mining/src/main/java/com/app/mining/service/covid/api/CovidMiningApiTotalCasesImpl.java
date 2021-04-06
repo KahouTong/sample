@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.app.entity.CovidCasesAreaEntity;
@@ -122,6 +123,7 @@ public class CovidMiningApiTotalCasesImpl implements CovidMiningAPITotalCases {
 		return json;
 	}
 	@Override
+	@Cacheable(value = "getTotalfromDB")
 	public String getTotalfromDB() {
 		log.info("getTotalfromDB starts. ");
 		List<CovidCasesAreaEntity> casesEntities = covidCasesRepository.listLast2Records();
